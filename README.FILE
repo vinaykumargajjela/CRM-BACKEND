@@ -1,0 +1,348 @@
+Fastor CRM Backend – Node.js Assignment
+A secure RESTful API backend for Customer Relationship Management (CRM) lead management, built using Node.js, Express, SQLite, Sequelize, and JWT.
+
+Table of Contents
+Project Overview
+
+Features
+
+Tech Stack
+
+Folder Structure
+
+Installation
+
+Environment Variables
+
+API Endpoints
+
+Testing
+
+Project Author
+
+License
+
+Project Overview
+This backend manages counselor accounts, captures and assigns leads, enforces secure authentication, and distinguishes between public and claimed (private) enquiries.
+
+Features
+Employee (counselor) registration and authentication
+
+Public endpoint for submitting client enquiries (leads)
+
+Lead assignment: counselors can claim leads
+
+Private endpoints for viewing claimed leads
+
+JWT-based authentication for internal endpoints
+
+Passwords securely hashed with bcrypt
+
+Tech Stack
+Node.js (v18+)
+
+Express.js
+
+SQLite (local database)
+
+Sequelize (ORM)
+
+JWT authentication (jsonwebtoken)
+
+Password hashing (bcrypt)
+
+dotenv for environment variables
+
+Folder Structure
+text
+crm-backend/
+ ├── config/
+ ├── controllers/
+ ├── middlewares/
+ ├── models/
+ ├── routes/
+ ├── .env
+ ├── .gitignore
+ ├── crm_db.sqlite
+ ├── package.json
+ └── server.js
+Installation
+Clone the repository
+
+Install Dependencies
+
+text
+npm install
+Configure .env file (see below)
+
+Start the server
+
+text
+npm run dev       # for development (nodemon)
+npm start         # for production
+Environment Variables
+Add these to your .env file:
+
+text
+PORT=3000
+JWT_SECRET=your_secret_key
+DB_DIALECT=sqlite
+DB_STORAGE=./crm_db.sqlite
+API Endpoints
+Employee Authentication
+Register
+POST /api/employees/register
+
+Body:
+
+json
+{"name": "Vinay", "email": "vinay@test.com", "password": "vinay123"}
+Response: { "message": "Registration successful", "emp": {...} }
+
+Login
+POST /api/employees/login
+
+Body:
+
+json
+{"email": "vinay@test.com", "password": "vinay123"}
+Response: { "message": "Login successful", "token": "JWT" }
+
+Lead (Enquiry) Management
+Submit Enquiry (Public, No Auth)
+POST /api/enquiries/public
+
+Body:
+
+json
+{"name": "John", "email": "john@client.com", "courseInterest": "Java"}
+Response: { "message": "Enquiry submitted" }
+
+Fetch Unclaimed Leads (Protected)
+GET /api/enquiries/public
+
+Headers: Authorization: Bearer <jwt_token>
+
+Response: Array of unclaimed enquiries
+
+Fetch Claimed Leads (Protected)
+GET /api/enquiries/private
+
+Headers: Authorization: Bearer <jwt_token>
+
+Response: Array of enquiries claimed by logged-in counselor
+
+Claim Lead (Protected)
+PATCH /api/enquiries/:id/claim
+
+Headers: Authorization: Bearer <jwt_token>
+
+Response:
+
+Success: { "message": "Lead claimed", "enquiry": {...} }
+
+Error: { "message": "Already claimed" } or { "message": "Enquiry not found" }
+
+Testing
+Use Postman or Thunder Client (VSCode extension).
+
+Register, login, then use returned JWT token for all protected routes.
+
+Example Test Credentials
+Name	Email	Password
+Vinay	vinay@test.com	vinay123
+Alice	alice@test.com	alice123
+Bob	bob@test.com	bob123
+Project Author
+Vinay
+
+License
+This project is for educational purposes.
+
+Copy this template to your README.md, fill in your repo/project details, and you have a clean, professional documentation ready for submission.​
+
+you have not given in readme formate so that when i copy it will give me in the same foramte in readme file also and in git too
+
+Here is a copy-paste ready README.md template, using plain Markdown so it displays and works perfectly on GitHub and in VSCode. The links in the Table of Contents use standard Markdown anchor links and will work wherever GitHub Markdown is supported.
+
+text
+# Fastor CRM Backend – Node.js Assignment
+
+A secure RESTful API backend for Customer Relationship Management (CRM) lead management, built with Node.js, Express.js, SQLite, Sequelize, and JWT.
+
+---
+
+## Table of Contents
+
+- [Project Overview](#project-overview)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Folder Structure](#folder-structure)
+- [Installation](#installation)
+- [Environment Variables](#environment-variables)
+- [API Endpoints](#api-endpoints)
+- [Testing](#testing)
+- [Sample Credentials](#sample-credentials)
+- [Project Author](#project-author)
+- [License](#license)
+
+---
+
+## Project Overview
+
+This backend manages counselor accounts, captures and assigns leads, enforces secure authentication, and distinguishes between public and claimed (private) enquiries.
+
+---
+
+## Features
+
+- Employee (counselor) registration and authentication
+- Public endpoint for submitting client enquiries (leads)
+- Lead assignment: counselors can claim leads
+- Private endpoints for viewing claimed leads
+- JWT-based authentication for internal endpoints
+- Passwords securely hashed with bcrypt
+
+---
+
+## Tech Stack
+
+- Node.js (v18+)
+- Express.js
+- SQLite (local database)
+- Sequelize (ORM)
+- JWT authentication (jsonwebtoken)
+- Password hashing (bcrypt)
+- dotenv for environment variables
+
+---
+
+## Folder Structure
+
+crm-backend/
+├── config
+├── controller
+/ ├── middlewar
+s/ ├── mod
+ls/ ├── ro
+tes/ ├─
+.env ├── .gi
+ignore ├── crm_d
+.sqlite ├── pac
+text
+
+---
+
+## Installation
+
+1. **Clone the repository**
+2. **Install Dependencies:**
+    ```
+    npm install
+    ```
+3. **Configure `.env` file (see below)**
+4. **Start the server:**
+    ```
+    npm run dev       # for development (nodemon)
+    npm start         # for production
+    ```
+
+---
+
+## Environment Variables
+
+Create a `.env` file with the following content:
+
+PORT=3000
+JWT_SECRET=your_secret_key
+DB_DIALECT=sqlite
+text
+
+---
+
+## API Endpoints
+
+### Employee Authentication
+
+#### Register
+- `POST /api/employees/register`
+- **Body:**
+{
+"name": "Vin
+vinay@test.com",
+"password": "vinay
+text
+- **Response:**  
+  `{ "message": "Registration successful", "emp": {...} }`
+
+#### Login
+- `POST /api/employees/login`
+- **Body:**
+{
+"emavinay@test.com",
+"password": "vinay
+text
+- **Response:**  
+  `{ "message": "Login successful", "token": "JWT" }`
+
+---
+
+### Lead (Enquiry) Management
+
+#### Submit Enquiry (Public, No Auth)
+- `POST /api/enquiries/public`
+- **Body:**
+{
+"name": "Jo
+n", john@client.com",
+"courseInterest": "J
+text
+- **Response:**  
+  `{ "message": "Enquiry submitted" }`
+
+#### Fetch Unclaimed Leads (Protected)
+- `GET /api/enquiries/public`
+- **Headers:**  
+  `Authorization: Bearer <jwt_token>`
+- **Response:**  
+  Array of unclaimed enquiries
+
+#### Fetch Claimed Leads (Protected)
+- `GET /api/enquiries/private`
+- **Headers:**  
+  `Authorization: Bearer <jwt_token>`
+- **Response:**  
+  Array of enquiries claimed by logged-in counselor
+
+#### Claim Lead (Protected)
+- `PATCH /api/enquiries/:id/claim`
+- **Headers:**  
+  `Authorization: Bearer <jwt_token>`
+- **Response:**
+    - Success: `{ "message": "Lead claimed", "enquiry": {...} }`
+    - Error: `{ "message": "Already claimed" }` or `{ "message": "Enquiry not found" }`
+
+---
+
+## Testing
+
+- Use [Postman](https://www.postman.com/) or [Thunder Client](https://www.thunderclient.com/) for API requests.
+- Register and log in. Use the returned JWT token for all protected endpoints.
+
+---
+
+## Sample Credentials
+
+| Name   | Email            | Password   |
+|--------|------------------|-----------|
+| Vinay  | vinay@test.com   | vinay123  |
+| Alice  | alice@test.com   | alice123  |
+| Bob    | bob@test.com     | bob123    |
+
+---
+
+## Project Author
+
+**Vinay**
+
+---
