@@ -1,1 +1,122 @@
+## Fastor CRM Backend (Node.js)
 
+A secure backend system for CRM lead management, built with **Node.js**, **Express**, **SQLite**, **Sequelize**, and **JWT**.  
+Handles counselor accounts, lead submission, lead assignment, and role-based access securely.
+
+---
+
+## 🚀 Features
+
+- Counselor registration & login
+- Public API for submitting leads
+- Claim & manage leads system
+- JWT-based authentication
+- BCrypt password encryption
+- SQLite local DB with Sequelize ORM
+- Protected routes for counselors
+
+---
+
+## 🛠 Tech Stack
+
+| Category | Tools |
+|--------|-------|
+| Backend | Node.js, Express |
+| Database | SQLite |
+| ORM | Sequelize |
+| Auth | JWT, bcrypt |
+| Env Config | dotenv |
+
+---
+
+## 📁 Folder Structure
+
+crm-backend/
+├── node_modules/           
+├── config/
+│   └── database.js         
+├── controllers/            
+│   ├── employeeController.js
+│   ├── enquiryController.js
+├── middlewares/           
+│   └── auth.js             
+├── models/                 
+│   ├── index.js           
+│   ├── employee.js         
+│   └── enquiry.js          
+├── routes/                 
+│   ├── employeeRoutes.js   
+│   └── enquiryRoutes.js    
+├── .env                    
+├── package.json
+└── server.js               
+
+
+yaml
+Copy code
+
+---
+
+## ⚙️ Installation
+
+```bash
+git clone <your-repo-link>
+cd crm-backend
+npm install
+Setup environment variables
+Create .env:
+
+ini
+Copy code
+PORT=3000
+JWT_SECRET=your_secret_key
+DB_STORAGE=./crm_db.sqlite
+Run Server
+bash
+Copy code
+npm run dev   # dev (nodemon)
+npm start     # production
+📌 API Overview
+Register (Counselor)
+POST /api/employees/register
+
+json
+Copy code
+{
+  "name": "Vinay",
+  "email": "vinay@test.com",
+  "password": "vinay123"
+}
+Login
+POST /api/employees/login
+
+json
+Copy code
+{
+  "email": "vinay@test.com",
+  "password": "vinay123"
+}
+Submit Lead (Public)
+POST /api/enquiries/public
+
+json
+Copy code
+{
+  "name": "John",
+  "email": "john@client.com",
+  "courseInterest": "Java"
+}
+Claim Lead (Protected)
+PATCH /api/enquiries/:id/claim
+
+Header:
+
+makefile
+Copy code
+Authorization: Bearer <token>
+✅ Test Accounts
+Name	Email	Password
+Vinay	vinay@test.com	vinay123
+
+👨‍💻 Author
+Vinay
